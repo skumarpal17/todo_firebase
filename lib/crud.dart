@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
+import 'database/database.dart';
+
 class Crud extends StatefulWidget {
   final String uid;
   const Crud({Key? key, required this.uid}) : super(key: key);
@@ -14,18 +16,18 @@ class _CrudState extends State<Crud> {
   _CrudState(this.uid);
   CollectionReference firebase =
       FirebaseFirestore.instance.collection('mycrud');
-  // final snapShot = FirebaseFirestore.instance
-  //     .collection('posts')
-  //     .doc(varuId) // varuId in your case
-  //     .get();
 
   TextEditingController mytext = TextEditingController();
-  // final QuerySnapshot snap ;
   String text2 = "";
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Note")),
+      appBar: AppBar(title: Text("Note"),
+      actions: [
+        IconButton(onPressed: (){
+          Navigator.of(context).push(MaterialPageRoute(builder: (context)=>Realdata(),));
+        }, icon: Icon(Icons.flutter_dash_rounded))
+      ],),
       body: SingleChildScrollView(
         child: Column(
           children: [
