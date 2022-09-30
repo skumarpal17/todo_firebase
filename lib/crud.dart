@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
+import 'booking.dart';
 import 'database/database.dart';
 
 class Crud extends StatefulWidget {
@@ -22,12 +23,18 @@ class _CrudState extends State<Crud> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Note"),
-      actions: [
-        IconButton(onPressed: (){
-          Navigator.of(context).push(MaterialPageRoute(builder: (context)=>Realdata(),));
-        }, icon: Icon(Icons.flutter_dash_rounded))
-      ],),
+      appBar: AppBar(
+        title: Text("Note"),
+        actions: [
+          IconButton(
+              onPressed: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => Booking(),
+                ));
+              },
+              icon: Icon(Icons.flutter_dash_rounded))
+        ],
+      ),
       body: SingleChildScrollView(
         child: Column(
           children: [
