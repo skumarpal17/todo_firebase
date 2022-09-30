@@ -87,7 +87,7 @@ class _LoginState extends State<Login> {
                       controller: passwordController,
                       validator: (val) =>
                           val!.length <= 8 ? "Password must be 8 digit" : null,
-                      decoration: InputDecoration(
+                      decoration:const InputDecoration(
                           border: OutlineInputBorder(), hintText: "Password"),
                     ),
                   ),
