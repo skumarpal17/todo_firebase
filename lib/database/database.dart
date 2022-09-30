@@ -39,12 +39,12 @@ class _RealdataState extends State<Realdata> {
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: SafeArea(
-          child: SingleChildScrollView(
+          child: SingleChildScrollView( 
             child: Column(
               children: [
                 TextField(
                   controller: textfield,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     border:  OutlineInputBorder()
                   ),
                 ),

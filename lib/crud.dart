@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:crudopertion/updatetodo.dart';
 import 'package:flutter/material.dart';
 
 import 'database/database.dart';
@@ -74,45 +75,54 @@ class _CrudState extends State<Crud> {
                       shrinkWrap: true,
                       physics: NeverScrollableScrollPhysics(),
                       itemBuilder: (context, index) {
-                        return Card(
-                          child: ListTile(
-                            title: Text(snapshot.data!.docs[index]['input']),
-                            trailing: IconButton(
-                              icon: Icon(Icons.delete),
-                              highlightColor: Colors.red,
-                              onPressed: () {
-                                showDialog(
-                                    context: context,
-                                    builder: (BuildContext context) {
-                                      return AlertDialog(
-                                        title: Text('Are you want to delete'),
-                                        actions: [
-                                          ElevatedButton(
-                                              onPressed: () {
-                                                var a = snapshot
-                                                    .data!.docs[index].id;
-                                                FirebaseFirestore.instance
-                                                    .collection('mycrud')
-                                                    .doc(uid)
-                                                    .collection("task2")
-                                                    .doc(a)
-                                                    .delete();
-                                                print(a);
-                                                Navigator.of(context).pop();
-                                              },
-                                              child: Text('Yes')),
-                                          SizedBox(
-                                            width: 17,
-                                          ),
-                                          ElevatedButton(
-                                              onPressed: () {
-                                                Navigator.of(context).pop();
-                                              },
-                                              child: Text('No')),
-                                        ],
-                                      );
-                                    });
-                              },
+                        return GestureDetector(
+                          onTap: (){
+                            var a = snapshot
+                                .data!.docs[index].id;
+                            Navigator.of(context).push(MaterialPageRoute(builder: (context) => UpdateTodo(todo:snapshot.data!.docs[index]['input'], uid: widget.uid,
+                              docId: a.toString(),)));
+
+                          },
+                          child: Card(
+                            child: ListTile(
+                              title: Text(snapshot.data!.docs[index]['input']),
+                              trailing: IconButton(
+                                icon: Icon(Icons.delete),
+                                highlightColor: Colors.red,
+                                onPressed: () {
+                                  showDialog(
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return AlertDialog(
+                                          title: Text('Are you want to delete'),
+                                          actions: [
+                                            ElevatedButton(
+                                                onPressed: () {
+                                                  var a = snapshot
+                                                      .data!.docs[index].id;
+                                                  FirebaseFirestore.instance
+                                                      .collection('mycrud')
+                                                      .doc(uid)
+                                                      .collection("task2")
+                                                      .doc(a)
+                                                      .delete();
+                                                  print(a);
+                                                  Navigator.of(context).pop();
+                                                },
+                                                child: Text('Yes')),
+                                            SizedBox(
+                                              width: 17,
+                                            ),
+                                            ElevatedButton(
+                                                onPressed: () {
+                                                  Navigator.of(context).pop();
+                                                },
+                                                child: Text('No')),
+                                          ],
+                                        );
+                                      });
+                                },
+                              ),
                             ),
                           ),
                         );
