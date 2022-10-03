@@ -3,6 +3,7 @@ import 'package:crudopertion/updatetodo.dart';
 import 'package:flutter/material.dart';
 
 import 'booking.dart';
+import 'bookmark.dart';
 import 'database/database.dart';
 
 class Crud extends StatefulWidget {
@@ -30,7 +31,7 @@ class _CrudState extends State<Crud> {
           IconButton(
               onPressed: () {
                 Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => Booking(),
+                  builder: (context) => Bookmark(),
                 ));
               },
               icon: Icon(Icons.flutter_dash_rounded))
@@ -83,12 +84,14 @@ class _CrudState extends State<Crud> {
                       physics: NeverScrollableScrollPhysics(),
                       itemBuilder: (context, index) {
                         return GestureDetector(
-                          onTap: (){
-                            var a = snapshot
-                                .data!.docs[index].id;
-                            Navigator.of(context).push(MaterialPageRoute(builder: (context) => UpdateTodo(todo:snapshot.data!.docs[index]['input'], uid: widget.uid,
-                              docId: a.toString(),)));
-
+                          onTap: () {
+                            var a = snapshot.data!.docs[index].id;
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => UpdateTodo(
+                                      todo: snapshot.data!.docs[index]['input'],
+                                      uid: widget.uid,
+                                      docId: a.toString(),
+                                    )));
                           },
                           child: Card(
                             child: ListTile(

@@ -31,6 +31,9 @@ class _BookingState extends State<Booking> {
                   },
                   onDaySelected: (selectedDay, focusedDay) {
                     setState(() {
+                      _focusedDay == focusedDay
+                          ? selectedslot
+                          : selectedslot.clear();
                       _selectedDay = selectedDay;
                       _focusedDay =
                           focusedDay; // update `_focusedDay` here as well
@@ -70,6 +73,8 @@ class _BookingState extends State<Booking> {
           ],
         ),
       )),
+      floatingActionButton:
+          FloatingActionButton(onPressed: () {}, child: Text('book')),
     );
   }
 }
