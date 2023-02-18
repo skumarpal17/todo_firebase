@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:crudopertion/updatetodo.dart';
 import 'package:flutter/material.dart';
 
+import 'allfile.dart';
 import 'booking.dart';
 import 'bookmark.dart';
 import 'database/database.dart';
@@ -15,6 +16,28 @@ class Crud extends StatefulWidget {
 }
 
 class _CrudState extends State<Crud> {
+  List favouritelist = [];
+  var firestore = FirebaseFirestore.instance.collection("bookmark");
+  // firestore.map((docs){})
+  // var val = firestore.docs map((doc) => favouritelist.add(doc)).toList();
+  List allData = [];
+  Future<void> getData() async {
+    // Get docs from collection reference
+    QuerySnapshot querySnapshot = await firestore.get();
+
+    // Get data from docs and convert map to List
+    allData = querySnapshot.docs.map((doc) => doc.id).toList();
+    print("initstate $allData");
+    print("initstate ${allData.length}");
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getData();
+  }
+
   final String uid;
   _CrudState(this.uid);
   CollectionReference firebase =
@@ -31,7 +54,9 @@ class _CrudState extends State<Crud> {
           IconButton(
               onPressed: () {
                 Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => Bookmark(),
+                  builder: (context) => Allfile(
+                    bookmarklit: allData,
+                  ),
                 ));
               },
               icon: Icon(Icons.flutter_dash_rounded))

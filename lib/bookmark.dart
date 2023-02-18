@@ -2,36 +2,39 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class Bookmark extends StatefulWidget {
-  const Bookmark({Key? key}) : super(key: key);
+  final List bookmarklist;
+  const Bookmark({Key? key, required this.bookmarklist}) : super(key: key);
 
   @override
   State<Bookmark> createState() => _BookmarkState();
 }
 
 class _BookmarkState extends State<Bookmark> {
-  List favouritelist = [];
+  // List favouritelist = [];
   var firestore = FirebaseFirestore.instance.collection("bookmark");
-  // firestore.map((docs){})
-  // var val = firestore.docs map((doc) => favouritelist.add(doc)).toList();
-  List allData = [];
-  Future<void> getData() async {
-    // Get docs from collection reference
-    QuerySnapshot querySnapshot = await firestore.get();
+  // // firestore.map((docs){})
+  // // var val = firestore.docs map((doc) => favouritelist.add(doc)).toList();
+  // List allData = [];
+  // Future<void> getData() async {
+  //   // Get docs from collection reference
+  //   QuerySnapshot querySnapshot = await firestore.get();
+  //
+  //   // Get data from docs and convert map to List
+  //   allData = querySnapshot.docs.map((doc) => doc.id).toList();
+  //   print("initstate $allData");
+  //   print("initstate ${allData.length}");
+  // }
 
-    // Get data from docs and convert map to List
-    allData = querySnapshot.docs.map((doc) => doc.id).toList();
-    print("initstate $allData");
-    print("initstate ${allData.length}");
-  }
+  List finallist = [];
 
   onclick(int index) async {
-    if (allData.contains(index.toString())) {
+    if (finallist.contains(index.toString())) {
       var id1 = firestore.doc(index.toString()).id;
-      await allData.remove(index.toString());
+      await widget.bookmarklist.remove(index.toString());
       FirebaseFirestore.instance.collection("bookmark").doc(id1).delete();
       // favouritelist.remove(index);
     } else {
-      allData.add(index.toString());
+      widget.bookmarklist.add(index.toString());
       await firestore.doc(index.toString()).set({"index": index.toString()});
       // favouritelist.add(index);
     }
@@ -41,7 +44,8 @@ class _BookmarkState extends State<Bookmark> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    getData();
+    finallist = widget.bookmarklist;
+    // getData();
   }
 
   @override
@@ -57,14 +61,14 @@ class _BookmarkState extends State<Bookmark> {
                 leading: Text(index.toString()),
                 trailing: IconButton(
                   onPressed: () {
-                    getData();
+                    // getData();
                     setState(() {
                       onclick(index);
                     });
-                    print("onClick $allData");
-                    print("onClick ${allData.length}");
+                    // print("onClick $allData");
+                    // print("onClick ${allData.length}");
                   },
-                  icon: allData.contains(index.toString())
+                  icon: finallist.contains(index.toString())
                       ? Icon(Icons.bookmark)
                       : Icon(Icons.bookmark_border),
                 ),
